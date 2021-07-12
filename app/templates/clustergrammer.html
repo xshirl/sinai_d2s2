@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html>
+    <head> 
+        <title>D2S2</title>
+        <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}" type="text/css" />
+        <style>
+            .card {
+                height: 400px;
+                overflow: auto;
+            }
+
+
+            .hero {
+                background-color: #eee;
+                width:100%;
+                height: 500px;
+                position:relative;
+                z-index: 1;
+
+            }
+
+            .hero .bg {
+                background: #005aa7; /* fallback for old browsers */
+                background: #aa4b6b; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #aa4b6b, #6b6b83, #3b8d99), 
+    url(https://images.unsplash.com/photo-1509743248323-354f9af69c6e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2514&q=80); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #aa4b6b, #6b6b83, #3b8d99), 
+    url(https://images.unsplash.com/photo-1509743248323-354f9af69c6e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2514&q=80);
+                
+                opacity: 0.6;
+                background-size: cover;
+                background-position:center;
+                position: absolute;
+                z-index: -1;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            .cards-container {
+                background-color: #FCF9FF;
+                width: 100%;
+                height: 1300px;
+
+            }
+
+            footer {
+                background-color: darkslateblue;
+                width: 100%;
+                bottom: 0;
+                padding: 10px;
+                margin-top: -50px;
+                color: #eee;
+            }
+            
+        </style>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">D2S2</a>
+                <ul class="navbar-nav ml-auto">
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="/clustergrammer" style="color:#eee">Clustergrammer</a>
+                    </li> -->
+                    </ul>
+                <img src="http://i68.tinypic.com/2v92kc6.png" alt="logo" width="10%"/>
+            </div>
+        </nav>
+
+        <div class="hero">
+            <div class="bg"></div>
+                <div class="header__text-box">
+                        
+                        <h1 class="heading-primary">
+                            <!-- <img src="http://i68.tinypic.com/2v92kc6.png" alt="logo" width="30%"/> -->
+                            <span class="heading-primary--main">D2<span class="subheading">S2</span></span>
+                            
+                            <span class="heading-primary--sub"><span class="subtitle">Drug and Disease Signatures and Sets<br /></span>A tool to explore disease, drug, and gene signatures from the latest comprehensive publicly available databases and the Sinai EHR based on an input.</span>
+                        </h1>
+
+                        <!-- <img src="../BD2K.png" alt="BD2K" width="50%" />
+                        <img src="../BioinformaticsCenter.png" width="50%" /> -->
+                        
+                    </div>
+
+                    <!-- <div class="search-container">
+                    <div class="search-bar">
+                            <form class="form-inline" role="form">
+                                    <div class="form-group">
+                                            <select id="memoryType" class="form-control firstList">
+                                                <option value="select" selected="selected">Select</option>
+                                                <option value="drug">Drug</option>
+                                                <option value="disease">Disease</option>
+                                            </select>
+                                        </div>
+                                    <div class="form-group">
+                                        <select id="drugInput" class="form-control search-input secondList">
+                                                <option value="select" selected="selected">...</option>
+                                        </select>
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        
+                                        <button class="form-control" id="submit"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </form>
+                    </div>
+                </div> -->
+        </div>
+
+        <!-- <iframe id="iframe_preview" src="{{cluster_link}}" frameborder="0" width="600"></iframe> -->
+        <div id="input_list" style="display:none">{{inputs}}</div>
+        <div id="disease_inputs" style="display:none;">{{disease_inputs}}</div>
+
+        <div id='container-id-1'>
+                <h1 class='wait_message'>Please wait ...</h1>
+            </div>
+
+        <script>
+        $('#memoryType').change(function() {
+    var selectedOption = $(this).children("option:selected").val();
+    
+    if(selectedOption.toLowerCase() == "drug") {
+       
+        $('#drugInput').empty()
+    var drugs = $("#input_list").html()
+    drugs = drugs.replace(/'/g, '"')
+    drugs = JSON.parse(drugs)
+    for (var i = 0; i < drugs.length; i++) {
+        console.log(drugs[i])
+        var opt = drugs[i]
+        var el = document.createElement("option")
+        el.textContent = opt;
+        el.value = opt;
+        el.name = "text";
+        $('#drugInput').append(el);
+     }
+    }
+
+    else if (selectedOption.toLowerCase()== 'disease') {
+        
+        $('#drugInput').empty()
+        var diseases = $("#disease_inputs").html()
+        diseases = JSON.parse(diseases)
+        for (var i = 0; i < diseases.length; i++) {
+        console.log(diseases[i])
+        var opt = diseases[i]
+        var el = document.createElement("option")
+        el.textContent = opt;
+        el.value = opt;
+        el.name = "text";
+        $('#drugInput').append(el);
+     }
+    }
+})
+
+</script>
+
+       
+            <script src="../static/d3.js"></script>
+            <script src="../static/jquery-1.11.2.min.js"></script>
+            <script src="../static/underscore-min.js"></script>
+            <script src="../static/bootstrap.min.js"></script>
+        <script src="../static/clustergrammer.js"></script>
+        <script src="../static/Enrichrgram.js"></script>
+        <script src="../static/hzome_functions.js"></script>
+        <script src="../static/send_to_Enrichr.js"></script>
+        <script src='../static/load_clustergram.js'></script>
+        </body>
+</html>
+

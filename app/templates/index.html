@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+
+<html>
+    <head> 
+        <title>D2S2</title>
+        <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}" type="text/css" />
+        <style>
+            .card {
+                height: 400px;
+                overflow: auto;
+            }
+
+
+            .hero {
+                background-color: #eee;
+                width:100%;
+                height: 500px;
+                position:relative;
+                z-index: 1;
+
+            }
+
+            .hero .bg {
+                background: #005aa7; /* fallback for old browsers */
+                background: #aa4b6b; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #aa4b6b, #6b6b83, #3b8d99), 
+    url(https://images.unsplash.com/photo-1509743248323-354f9af69c6e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2514&q=80); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #aa4b6b, #6b6b83, #3b8d99), 
+    url(https://images.unsplash.com/photo-1509743248323-354f9af69c6e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2514&q=80);
+                
+                opacity: 0.6;
+                background-size: cover;
+                background-position:center;
+                position: absolute;
+                z-index: -1;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            .cards-container {
+                background-color: #F3F7F8;
+                width: 100%;
+                height: 1800px;
+
+            }
+
+            footer {
+                background-color: darkslateblue;
+                width: 100%;
+                bottom: 0;
+                padding: 10px;
+                margin-top: -50px;
+                color: #eee;
+            }
+
+            .card-title {
+                font-size: 30px;
+            }
+            
+            form {
+                margin: 0 auto;
+                width: 900px;
+            }
+
+            .post-load button {
+                display:block;
+            }
+        </style>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">D2S2</a>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <!-- <a class="nav-link" href="/d2s2/clustergrammer" style="color:#eee">Clustergrammer</a> -->
+                    </li>
+                    </ul>
+                <img src="https://i.ibb.co/b2xHZ6W/D2-S2-Logo-2019.png" alt="logo" width="10%"/> 
+            </div>
+        </nav>
+
+        <div class="hero">
+            <div class="bg"></div>
+                <div class="header__text-box">
+                        
+                        <h1 class="heading-primary">
+                            <!-- <img src="https://i.ibb.co/b2xHZ6W/D2-S2-Logo-2019.png" alt="logo" width="30%"/> -->
+                            <span class="heading-primary--main">D2<span class="subheading">S2</span></span>
+                            
+                            <span class="heading-primary--sub"><span class="subtitle">Drug and Disease Signatures and Sets<br /></span>A tool to explore disease, drug, and gene signatures from the latest comprehensive publicly available databases and the Sinai EHR based on an input.</span>
+                        </h1>              
+
+                        <!-- <img src="../BD2K.png" alt="BD2K" width="50%" />
+                        <img src="../BioinformaticsCenter.png" width="50%" /> -->
+                        
+                    </div>
+
+                    <div class="search-container">
+                    <div class="search-bar">
+                            <form class="form-inline" role="form">
+                                
+                                    <div class="form-group" style="text-align:center;">
+                                            <select id="memoryType" class="form-control firstList">
+                                                
+                                                <option value="drug" selected="selected">Drug</option>
+                                                <option value="disease">Disease</option>
+                                            </select>
+                                        </div>
+                                    <div class="form-group">
+                                        <select id="drugInput" class="form-control search-input secondList" name="drug">
+                                                <!-- <option value="select" selected="selected">...</option> -->
+                                        </select>
+                                        <!-- <input name="text" type="text" class="form-control search-input" placeholder="Search drug or disease"> -->
+                                    </div>
+                                    <button class="form-control" id="submit"><i class="fas fa-search"></i></button>
+                                
+                                    <div>
+                                    <div class="form-group post-load">
+                                        
+                                        
+                                        
+                                            <button class="form-control" id="submit" onclick="javascript:form.action='/d2s2/clustergrammer';">Clustergrammer</button>
+                                            <button class="form-control" id="submit" onclick="javascript:form.action='/d2s2/emr_associations';">Mount Sinai EMR Associations</button>
+                                        
+                                    </div>
+                                </div>
+                                </form>
+                            
+                    </div>
+                </div>
+        </div>
+        <div id="input_list" style="display:none">{{inputs}}</div>
+        <div id="disease_inputs" style="display:none;">{{disease_inputs}}</div>
+        <section class="cards-container">
+       <div class="container">
+           <div class="row card-row">
+               <div class="col-md-4">
+                   <div class="card card-1">
+                       <div class="card-body">
+                           <h1 class="card-title">L1000FWD</h1>
+                           <img class="card-img" src="https://amp.pharm.mssm.edu/l1000fwd/images/logo.png" alt="L1000FWD" />
+                           <div class="clear"></div>
+                           <div class="spinner-border loader1" role="status" style="display:none;">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                           <p class="card-text">
+                               L1000 fireworks display (L1000FWD) is a web application that provides interactive visualization of over 16,000 drug and small-molecule induced gene expression signatures. L1000FWD enables coloring of signatures by different attributes such as cell type, time point, concentration, as well as drug attributes such as MOA and clinical phase.
+                           </p>
+                       </div>
+                   </div>
+               </div>
+
+               <div class="col-md-4">
+                   <div class="card card-2">
+                       <div class="card-body">
+                           <h1 class="card-title">CREEDS Rx</h1>
+                           <img class="card-img" src="http://labs.icahn.mssm.edu/maayanlab/wp-content/uploads/sites/75/2014/10/creeds_logo.fw_-150x150.png" alt="Creeds" />
+                           <div class="clear"></div>
+                           <div class="spinner-border loader2" role="status" style="display:none;">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                           <p class="card-text">Collections of processed gene, drug and disease signatures from GEO.</p>
+                       </div>
+                   </div>
+               </div>
+
+               <div class="col-md-4">
+                    <div class="card card-3">
+                            <div class="card-body">
+                                <h1 class="card-title">CREEDS Dx</h1>
+                                <img class="card-img" src="http://labs.icahn.mssm.edu/maayanlab/wp-content/uploads/sites/75/2014/10/creeds_logo.fw_-150x150.png" alt="Creeds" />
+                                <div class="clear"></div>
+                                <div class="spinner-border loader3" role="status" style="display:none;">
+                                        <span class="sr-only">Loading...</span>
+                                      </div>
+                                <p class="card-text">Collections of processed gene, drug and disease signatures from GEO.</p>
+                            </div>
+                        </div>
+               </div>
+           </div>
+
+           <div class="row card-row mt-3">
+                <div class="col-md-4">
+                        <div class="card card-4">
+                            <div class="card-body">
+                                <h1 class="card-title">Geneshot</h1>
+                                <img class="card-img" src="http://labs.icahn.mssm.edu/maayanlab/wp-content/uploads/sites/75/2019/05/geneshot_logo-3.jpg" alt="Geneshot" />
+                                <div class="clear"></div>
+                                <div class="spinner-border loader4" role="status" style="display:none;">
+                                        <span class="sr-only">Loading...</span>
+                                      </div>
+                                <p class="card-text">Enables researchers to enter arbitrary search terms, to receive ranked lists of genes relevant to the search terms. Returned ranked gene lists contain genes that were previously published in association with the search terms, as well as genes predicted to be associated with the terms based on data integration from multiple sources.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="col-md-4">
+                    <div class="card card-5">
+                        <div class="card-body">
+                            <h1 class="card-title"> GWAS Catalog</h1>
+                            <img class="card-img" src="https://www.ebi.ac.uk/gwas/images/GWAS_Catalog_circle_178x178.png" alt="GWAS" />
+                            <div class="clear"></div>
+                            <div class="spinner-border loader5" role="status" style="display:none;">
+                                    <span class="sr-only">Loading...</span>
+                                  </div>
+                            <p class="card-text">The GWAS Catalog provides a consistent, searchable, visualisable and freely available database of published SNP-trait associations, which can be easily integrated with other resources, and is accessed by scientists, clinicians and other users worldwide. <br/>
+                            The logo was taken from https://www.ebi.ac.uk/gwas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card card-6">
+                        <div class="card-body">
+                            <h1 class="card-title"> DrugMatrix</h1>
+                            <img class="card-img" src="https://i.ibb.co/Ws1pHc4/drug-Matrix.png" alt="DrugMatrix" />
+                            <div class="clear"></div>
+                            <div class="spinner-border loader6" role="status" style="display:none;">
+                                    <span class="sr-only">Loading...</span>
+                                  </div>
+                            <p class="card-text">The DrugMatrix database is one of the world’s largest toxicogenomic reference resources. The ToxFX reporting system, a companion to DrugMatrix, allows users to quickly create fully annotated reports from DrugMatrix data. Together, these tools increase the efficiency of the toxicological assessment process and reduce the amount of time needed to formulate a xenobiotic’s potential for toxicity.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row card-row">
+                    <div class="col-md-4">
+                            <div class="card card-7">
+                                <div class="card-body">
+                                    <h1 class="card-title">X2K L1000</h1>
+                                    <img class="card-img3" src="http://labs.icahn.mssm.edu/maayanlab/wp-content/uploads/sites/75/2014/10/x2kweb_logo-300x83.png" alt="X2K" width="20%"/>
+                                    <div class="clear"></div>
+                                    <div class="spinner-border loader7" role="status" style="display:none;">
+                                            <span class="sr-only">Loading...</span>
+                                          </div>
+                                    <p class="card-text">X2K Web infers upstream regulatory networks from signatures of differentially expressed genes. By combining transcription factor enrichment analysis, protein-protein interaction network expansion, with kinase enrichment analysis, X2K Web produces inferred networks of transcription factors, proteins, and kinases predicted to regulate the expression of the inputted gene list. </p>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="col-md-4">
+                            <div class="card card-8">
+                                <div class="card-body">
+                                    <h1 class="card-title">X2K CREEDS Rx</h1>
+                                    <img class="card-img3" src="http://labs.icahn.mssm.edu/maayanlab/wp-content/uploads/sites/75/2014/10/x2kweb_logo-300x83.png" alt="X2K" width="20%"/>
+                                    <div class="clear"></div>
+                                    <div class="spinner-border loader8" role="status" style="display:none;">
+                                            <span class="sr-only">Loading...</span>
+                                          </div>
+                                    <p class="card-text">X2K Web infers upstream regulatory networks from signatures of differentially expressed genes. By combining transcription factor enrichment analysis, protein-protein interaction network expansion, with kinase enrichment analysis, X2K Web produces inferred networks of transcription factors, proteins, and kinases predicted to regulate the expression of the inputted gene list. </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="col-md-4">
+                                <div class="card card-9">
+                                    <div class="card-body">
+                                        <h1 class="card-title">X2K Creeds Dx</h1>
+                                        <img class="card-img3" src="http://labs.icahn.mssm.edu/maayanlab/wp-content/uploads/sites/75/2014/10/x2kweb_logo-300x83.png" alt="X2K" width="20%"/>
+                                        <div class="clear"></div>
+                                        <div class="spinner-border loader9" role="status" style="display:none;">
+                                                <span class="sr-only">Loading...</span>
+                                              </div>
+                                        <p class="card-text">X2K Web infers upstream regulatory networks from signatures of differentially expressed genes. By combining transcription factor enrichment analysis, protein-protein interaction network expansion, with kinase enrichment analysis, X2K Web produces inferred networks of transcription factors, proteins, and kinases predicted to regulate the expression of the inputted gene list.</p>
+                                    </div>
+                                </div>
+                    </div>
+            </div>
+            <div class="row card-row">
+                    <div class="col-md-4">
+                            <div class="card card-10">
+                                <div class="card-body">
+                                    <h1 class="card-title">UK BioBank</h1>
+                                    <img class="card-img2" src="https://i.ibb.co/BgKyKQb/14c7fnr.png" alt="BioBank" />
+                                    <div class="clear"></div>
+                                    <div class="spinner-border loader10" role="status" style="display:none;">
+                                            <span class="sr-only">Loading...</span>
+                                          </div>
+                                    <p class="card-text">UK Biobank is a major national and international health resource, and a registered charity in its own right, with the aim of improving the prevention, diagnosis and treatment of a wide range of serious and life-threatening illnesses – including cancer, heart diseases, stroke, diabetes, arthritis, osteoporosis, eye disorders, depression and forms of dementia.  </p>
+                                </div>
+                            </div>
+                    </div>
+            
+
+            
+               
+        
+            </div>
+       </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+                <p> &copy; Copyright 2019, Ma'ayan Laboratory, Icahn School of Medicine at Mount Sinai</p>
+        </div>
+        
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+     <script>
+
+        
+
+   
+
+//  var drugs = $("#input_list").html()
+//  drugs = drugs.replace(/'/g, '"')
+//  drugs = JSON.parse(drugs)
+//      for (var i = 0; i < drugs.length; i++) {
+//          console.log(drugs[i])
+//          var opt = drugs[i]
+//          var el = document.createElement("option")
+//          el.textContent = opt;
+//          el.value = opt;
+//          el.name = "text";
+//          $('#drugInput').append(el);
+//      }
+     
+   
+ 
+
+//  var diseases = $("#disease_inputs").html()
+// diseases = diseases.replace(/'/g, '"')
+// diseases = JSON.parse(diseases)
+$(document).ajaxStart(function() {
+    $('.loader').show();
+})
+
+$(document).ajaxStop(function() {
+    $('.loader').hide();
+})
+
+$('.post-load').hide();
+var selectedOption = $('#memoryType').children("option:selected").val();
+    
+    if(selectedOption.toLowerCase() == "drug") {
+       
+        $('#drugInput').empty()
+    var drugs = $("#input_list").html()
+    drugs = drugs.replace(/'/g, '"')
+    drugs = JSON.parse(drugs)
+    for (var i = 0; i < drugs.length; i++) {
+        console.log(drugs[i])
+        var opt = drugs[i]
+        var el = document.createElement("option")
+        el.textContent = opt;
+        el.value = opt;
+        el.name = "drugName";
+        $('#drugInput').append(el);
+     }
+    }
+
+   
+    var options = $('#drugInput option');
+var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
+arr.sort(function(o1, o2) { return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; });
+options.each(function(i, o) {
+  o.value = arr[i].v;
+  $(o).text(arr[i].t);
+});
+
+$('#memoryType').change(function() {
+    var selectedOption = $(this).children("option:selected").val();
+    
+    if(selectedOption.toLowerCase() == "drug") {
+        $('.search-bar').css("width", "400px");
+        $('.post-load').css('top', '40px');
+        $('.post-load').css('left', '-375px');
+        $('#drugInput').empty()
+    var drugs = $("#input_list").html()
+    drugs = drugs.replace(/'/g, '"')
+    drugs = JSON.parse(drugs)
+    for (var i = 0; i < drugs.length; i++) {
+        console.log(drugs[i])
+        var opt = drugs[i]
+        var el = document.createElement("option")
+        el.textContent = opt;
+        el.value = opt;
+        el.name = "drugName";
+        $('#drugInput').append(el);
+     }
+    }
+
+    else if (selectedOption.toLowerCase()== 'disease') {
+        $('.search-bar').css("width", "600px");
+        $('.post-load').css('top', '0px');
+        $('.post-load').css('left', '150px');
+        $('#drugInput').empty()
+        var diseases = $("#disease_inputs").html()
+        diseases = JSON.parse(diseases)
+        for (var i = 0; i < diseases.length; i++) {
+        console.log(diseases[i])
+        var opt = diseases[i]
+        var el = document.createElement("option")
+        el.textContent = opt;
+        el.value = opt;
+        el.name = "diseaseName";
+        $('#drugInput').append(el);
+     }
+    }
+    var options = $('#drugInput option');
+var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
+arr.sort(function(o1, o2) { return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; });
+options.each(function(i, o) {
+  o.value = arr[i].v;
+  $(o).text(arr[i].t);
+});
+})
+
+
+$("#submit").click(function(e) {
+    var selectedOption = $('#memoryType option:selected').val();
+    var text= $("#drugInput option:selected").val();
+    var search = JSON.stringify({"input": text});
+    $('.post-load').show();
+
+
+    if (selectedOption.toLowerCase() == "drug") {
+    
+    $.post("/d2s2/search", search, function(data) {
+        console.log(search)
+    })
+
+    if ($('.loader1').css('display') == "none") {
+        $('.loader1').fadeIn();
+    }
+
+    if ($('.loader2').css('display') == "none") {
+        $('.loader2').fadeIn();
+    }
+
+    if ($('.loader3').css('display') == "none") {
+        $('.loader3').fadeIn();
+    }
+
+    if ($('.loader4').css('display') == "none") {
+        $('.loader4').fadeIn();
+    }
+
+    if ($('.loader5').css('display') == "none") {
+        $('.loader5').fadeIn();
+    }
+
+    if ($('.loader6').css('display') == "none") {
+        $('.loader6').fadeIn();
+    }
+
+    if ($('.loader7').css('display') == "none") {
+        $('.loader7').fadeIn();
+    }
+
+    if ($('.loader8').css('display') == "none") {
+        $('.loader8').fadeIn();
+    }
+
+    if ($('.loader9').css('display') == "none") {
+        $('.loader9').fadeIn();
+    }
+
+    if ($('.loader10').css('display') == "none") {
+        $('.loader10').fadeIn();
+    }
+
+     $.post("/d2s2/L1000", search, function(data) {
+         console.log(data);
+         $(".card-1").html(data);
+         $('.loader1').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-1 .card-text").html("No significant signatures found");
+        $('.loader1').fadeOut('fast');
+    })
+
+     $.post("/d2s2/creeds_drugs", search, function(data) {
+         console.log(data);
+         $(".card-2").html(data);
+         $('.loader2').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-2 .card-text").html("No significant signatures found");
+        $('.loader2').fadeOut('fast');
+    })
+     $.post("/d2s2/creeds_diseases", search, function(data) {
+         console.log(data);
+         $(".card-3").html(data);
+         $('.loader3').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-3 .card-text").html("No significant signatures found");
+        $('.loader3').fadeOut('fast');
+    })
+     $.post("/d2s2/geneshot", search, function(data) {
+         console.log(data);
+         $(".card-4").html(data);
+         $('.loader4').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-4 .card-text").html("No significant signatures found");
+        $('.loader4').fadeOut('fast');
+    })
+
+     $.post("/d2s2/gwas_drugs", search, function(data) {
+         console.log(data);
+         $(".card-5").html(data);
+         $('.loader5').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-5 .card-text").html("No significant signatures found");
+        $('.loader5').fadeOut('fast');
+    })
+
+    $.post("/d2s2/drug_matrix_drugs", search, function(data) {
+         console.log(data);
+         $(".card-6").html(data);
+         $('.loader6').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-6 .card-text").html("No significant signatures found");
+        $('.loader6').fadeOut('fast');
+    })
+    
+     $.post("/d2s2/x2kl1000", search, function(data) {
+         console.log(data);
+         $(".card-7").html(data);
+         $('.loader7').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-7 .card-text").html("No significant signatures found");
+        $('.loader7').fadeOut('fast');
+    })
+
+     $.post("/d2s2/x2k_creeds", search, function(data) {
+         console.log(data);
+         $(".card-8").html(data);
+         $('.loader8').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-8 .card-text").html("No significant signatures found");
+        $('.loader8').fadeOut('fast');
+    })
+
+    
+    $.post("/d2s2/x2k_creeds_dx_drugs", search, function(data) {
+         console.log(data);
+         $(".card-9").html(data);
+         $('.loader9').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-9 .card-text").html("No significant signatures found");
+        $('.loader9').fadeOut('fast');
+    })
+     
+     $.post("/d2s2/ukbiobank", search, function(data) {
+         $(".card-10").html(data);
+         $('.loader10').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-10 .card-text").html("No significant signatures found");
+        $('.loader10').fadeOut('fast');
+    })
+
+ 
+
+     
+    }
+    else if (selectedOption.toLowerCase()== 'disease') {
+        
+    $.ajax({
+        type: "POST",
+        url: "/search",
+        data: search,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(data) {console.log(data)},
+    })
+
+    if ($('.loader1').css('display') == "none") {
+        $('.loader1').fadeIn();
+    }
+
+    if ($('.loader2').css('display') == "none") {
+        $('.loader2').fadeIn();
+    }
+
+    if ($('.loader3').css('display') == "none") {
+        $('.loader3').fadeIn();
+    }
+
+    if ($('.loader4').css('display') == "none") {
+        $('.loader4').fadeIn();
+    }
+
+    if ($('.loader5').css('display') == "none") {
+        $('.loader5').fadeIn();
+    }
+
+    if ($('.loader6').css('display') == "none") {
+        $('.loader6').fadeIn();
+    }
+
+    if ($('.loader7').css('display') == "none") {
+        $('.loader7').fadeIn();
+    }
+
+    if ($('.loader8').css('display') == "none") {
+        $('.loader8').fadeIn();
+    }
+
+    if ($('.loader9').css('display') == "none") {
+        $('.loader9').fadeIn();
+    }
+
+    if ($('.loader10').css('display') == "none") {
+        $('.loader10').fadeIn();
+    }
+        $.post("/d2s2/L1000_diseases", search, function(data) {
+            console.log(data)
+         $(".card-1").html(data);
+         $('.loader1').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-1 .card-text").html("No significant signatures found");
+        $('.loader1').fadeOut('fast');
+    })
+    //.fail( function(xhr, textStatus, errorThrown) {
+    //      if ($(".card-1 .card-text").html() == "") {
+    //         $(".card-1 .card-text").html("No significant signatures found."); 
+    //      }
+       
+   
+
+    $.post("/d2s2/creeds_rx_dx", search, function(data) {
+         console.log(data);
+         $(".card-2").html(data);
+         $('.loader3').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-2 .card-text").html("No significant signatures found");
+        $('.loader2').fadeOut('fast');
+    })
+
+        $.post("/d2s2/creeds_dx_dx", search, function(data) {
+         console.log(data);
+         $(".card-3").html(data);
+         $('.loader3').fadeOut('fast');
+        }).fail(function(xhr, textStatus,errorThrown){
+            $(".card-3 .card-text").html("No significant signatures found.");
+            $('.loader3').fadeOut('fast');
+        })
+
+        $.post("/d2s2/geneshot", search, function(data) {
+         console.log(data);
+         $(".card-4").html(data);
+         $('.loader4').fadeOut('fast');
+        }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-4 .card-text").html("No significant signatures found.");
+        $('.loader4').fadeOut('fast');
+    })
+
+        $.post("/d2s2/gwas_drugs", search, function(data) {
+            console.log(data);
+         $(".card-5").html(data);
+         $('.loader5').fadeOut('fast');
+        }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-5 .card-text").html("No significant signatures found.");
+        $('.loader5').fadeOut('fast');
+    })
+
+    $.post("/d2s2/drug_matrix_diseases", search, function(data) {
+         console.log(data);
+         $(".card-6").html(data);
+         $('.loader6').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-6 .card-text").html("No significant signatures found");
+        $('.loader6').fadeOut('fast');
+    })
+
+
+        $.post("/d2s2/ukbiobank", search, function(data) {
+            console.log(data);
+         $(".card-10").html(data);
+         $('.loader10').fadeOut('fast');
+        }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-10 .card-text").html("No significant signatures found.");
+        $('.loader10').fadeOut('fast');
+    })
+
+        $.post("/d2s2/x2k_L1000_diseases", search, function(data) {
+            console.log(data);
+         $(".card-7").html(data);
+         $('.loader7').fadeOut('fast');
+        }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-7 .card-text").html("No significant signatures found.");
+        $('.loader7').fadeOut('fast');
+    })
+
+    $.post("/d2s2/x2k_creeds_rx_diseases", search, function(data) {
+         console.log(data);
+         $(".card-8").html(data);
+         $('.loader8').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-8 .card-text").html("No significant signatures found");
+        $('.loader8').fadeOut('fast');
+    })
+
+    $.post("/d2s2/x2k_creeds_dx_diseases", search, function(data) {
+         console.log(data);
+         $(".card-9").html(data);
+         $('.loader9').fadeOut('fast');
+     }).fail( function(xhr, textStatus, errorThrown) {
+        $(".card-9 .card-text").html("No significant signatures found");
+        $('.loader9').fadeOut('fast');
+    })
+
+  
+
+    }
+    e.preventDefault();
+ })
+
+
+
+
+   
+
+
+     </script>   
+    </body>
+</html>

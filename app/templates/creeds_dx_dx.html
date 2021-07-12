@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+    <head> 
+        <title>D2S2</title>
+        <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}" type="text/css" />
+
+        <style>
+            table {
+                font-size:14px;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h1 class="result-title">CREEDS Dx</h1>
+                </div>
+                <div class="col-md-3">
+                    <img class="mt-10" src="http://labs.icahn.mssm.edu/maayanlab/wp-content/uploads/sites/75/2014/10/creeds_logo.fw_-150x150.png" alt="L1000" width="50px" />
+                </div>
+            </div>
+        </div>
+
+        <main>
+            <!-- <div class="container">
+                <div class="row mt-10"> -->
+                        <div id="creeds_dx_dx_files" class="mt-10"></div>
+                <!-- </div>
+            
+        </div> -->
+            <div id="creedsFullName" style="display:none">{{creeds_full_name}}</div>
+             <div id="creeds_json" style="display:none;">{{creeds_dx_json}}</div>
+        </main>
+
+        <script>
+function truncate(input) {
+
+if (input.length > 30) {
+    return input.substring(0, 31) + "..."
+}
+else {
+    return input;
+}
+}
+            var creedsDxJson = JSON.parse($('#creeds_json').html());
+            var creedsFullName = JSON.parse($('#creedsFullName').html())
+            console.log(creedsDxJson);
+            console.log(creedsFullName)
+            Object.keys(creedsDxJson["id"]).forEach(function(key) {
+                var creedsDxDxId = creedsDxJson["id"][key];
+                
+                var creedsDxDxFullName = creedsFullName['full_name'][key];
+                var truncateName = truncate(creedsDxDxFullName)
+                $('#creeds_dx_dx_files').append(`<div style="margin-left: 10px;"><input type='checkbox' /> <a href="#" class="signatures" data-toggle="tooltip" data-placement="right" title="${creedsDxDxFullName}">${truncateName} </a><div class="float-right-margin"><a href="/d2s2/download_creeds_dx_dx_upgenes/${creedsDxDxId}"><i class="float-right fas fa-arrow-alt-circle-up"></i></a><a href="/d2s2/download_creeds_dx_dx_downgenes/${creedsDxDxId}"><i class="fas fa-arrow-alt-circle-down float-right"></i></i></a></div></div>`)
+
+                
+            })
+            
+        </script>
+    </body>
+</html>

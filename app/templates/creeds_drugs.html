@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+    <head> 
+        <title>D2S2</title>
+        <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}" type="text/css" />
+
+        <style>
+            table {
+                font-size:14px;
+            }
+            h1 {
+                font-size: 32px;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h1 class="result-title">CREEDS Rx</h1>
+                </div>
+                <div class="col-md-3">
+                    <img class="mt-10" src="http://labs.icahn.mssm.edu/maayanlab/wp-content/uploads/sites/75/2014/10/creeds_logo.fw_-150x150.png" alt="L1000" width="50px" />
+                </div>
+            </div>
+        </div>
+
+        <main>
+            
+            <div id="creeds_drug_files" class="mt-10"></div>
+             <div id="names" style="display:none;">
+                {{creeds_names}}
+            </div>
+            <div id="drugIds" style="display:none;">{{creeds_ids}}</div>
+        </main>
+
+
+        <script>
+function truncate(input) {
+
+    if (input.length > 25) {
+        return input.substring(0, 26) + "..."
+    }
+    else {
+        return input;
+}
+}
+
+            var names = JSON.parse($('#names').html());
+            var drugIds = JSON.parse($('#drugIds').html());
+
+
+            console.log(names);
+            console.log(drugIds);
+
+            Object.keys(names['full_name']).forEach(function(key) {
+                var fullName = names['full_name'][key];
+                var truncateName = truncate(fullName);
+                var drugId = drugIds['id'][key];
+                $('#creeds_drug_files').append(`<div style="margin-left: 10px;"><input type='checkbox' /><a href="#" class="signatures" data-toggle="tooltip" data-placement="right" title="${fullName}">${truncateName}</a><div class="float-right-margin"><a href="/d2s2/download_creeds_drugs_upgenes/${drugId}"><i class="fas fa-arrow-alt-circle-up float-right"></i></a><a href="/d2s2/download_creeds_drugs_downgenes/${drugId}"><i class="fas fa-arrow-alt-circle-down float-right"></i></i></a></div></div>`)
+            })
+
+          
+
+        //     Object.values(names['full_name']).forEach(function(value) {
+        //         var fullName = value;
+        //         Object.values(drugIds['id']).forEach(function(value){
+        //             var drugId = value;
+        //             $('#creeds_drug_files').append(`<div><input type='checkbox' />${fullName}<a href="/download_creeds_drugs_upgenes/${drugId}"><i class="fas fa-arrow-alt-circle-up float-right"></i></a><a href="/download_creeds_drugs_downgenes/${drugId}"><i class="fas fa-arrow-alt-circle-down float-right"></i></i></a></div>`)
+        //         })
+            
+        // })
+        
+        </script>
+    </body>
+</html>

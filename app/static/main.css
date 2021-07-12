@@ -1,0 +1,231 @@
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-10rem); }
+  80% {
+    transform: translateX(1rem); }
+  100% {
+    opacity: 1;
+    transform: translate(0); } }
+
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(10rem); }
+  80% {
+    transform: translateX(-1rem); }
+  100% {
+    opacity: 1;
+    transform: translate(0); } }
+    
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    font-family: "Segoi UI", "Helvetica Neue", "Arial", sans-serif;
+}
+
+
+
+.navbar {
+    background-color:darkslateblue !important;
+}
+.navbar-brand {
+    color:white !important;
+}
+
+.header__text-box {
+    position: absolute;
+    margin-top:250px;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.heading-primary {
+  text-align:center;
+  color:#C7B6DC;
+  backface-visibility: hidden;
+  margin-bottom: 6rem; }
+  .heading-primary--main {
+    text-align:center;
+    text-transform:uppercase;
+    display: block;
+    font-size: 6rem;
+    font-weight: 400;
+    letter-spacing: 3.5rem;
+    animation-name: moveInLeft;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    /*
+        animation-delay: 3s;
+        animation-iteration-count: 3;
+        */ }
+  .heading-primary--sub {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    animation: moveInRight 1s ease-out; }
+.subtitle {
+  letter-spacing: 0.2rem;
+  font-size: 1.2rem;
+  color: white;
+  text-transform:uppercase;
+  animation: moveInRight 1s ease-out;
+  
+}
+.subheading {
+    color: white;
+    font-weight: 700;
+}
+
+.search-bar {
+    margin-top:900px;
+    text-align:center;
+    width:400px;
+    margin: 0 auto;
+    position:relative;
+    top:350px;
+}
+
+.post-load {
+  position:relative;
+  top:40px;
+  left: -375px;
+}
+
+.drug-name {
+    font-size: 25px;
+    font-weight: 700;
+    text-transform:uppercase;
+    text-align:center;
+}
+
+/** Table styles **/
+
+.center-table {
+  width: 80%;
+  margin: 0 auto;
+}
+table th {
+  padding: 10px;
+  text-align:center;
+}
+
+table tr td {
+  padding: 10px;
+}
+
+.cards-container {
+  margin-top: 0px;
+  margin-bottom: 50px;
+  padding-top: 50px;
+}
+
+.card {
+  position:relative;
+  box-shadow:4px 4px #eee
+}
+
+.card-title {
+  color: darkslateblue;
+  float:left;
+}
+.card-img {
+ display:inline;
+ float:right;
+ width: 50px;
+}
+
+.card-img2 {
+  display:inline;
+ float:right;
+ width: 40%;
+}
+
+.card-img3 {
+  display:inline;
+  float:right;
+  width: 15%;
+}
+
+
+.clear {
+  clear:both;
+  display:block;
+}
+
+.float-left {
+  display:inline;
+  float:left;
+}
+
+.gene_json {
+  display:none;
+}
+
+.autorif, .generif, .enrichr, .tagger, .archs4 {
+  display:none;
+}
+
+.card-row {
+  margin-bottom: 30px;
+}
+
+.float-right {
+  float:right;
+}
+
+.float-right-margin {
+  float:right;
+  margin-right: 10px;
+
+}
+input[type='checkbox'] {
+  margin-right: 5px;
+}
+
+#files, #signatures {
+  font-size: 14px;
+}
+
+.result-title {
+  font-size: 30px;
+  margin-top: 10px;
+  color: darkslateblue;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.float-right-diseases {
+  float: right;
+  margin-left: 30px;
+}
+
+.loader {
+  color: darkslateblue;
+  font-size: 40px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.signatures {
+  color: black;
+}
+

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html>
+    <head> 
+        <title>D2S2</title>
+        <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}" type="text/css" />
+
+        <style>
+            table {
+                font-size:14px;
+            }
+
+            #files {
+                font-size:14px;
+            }
+            h1 {
+                font-size: 32px;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h1 class="result-title">DrugMatrix</h1>
+                </div>
+                <div class="col-md-3">
+                    <img class="mt-10" src="https://i.ibb.co/Ws1pHc4/drug-Matrix.png" alt="L1000" width="70px" />
+                </div>
+            </div>
+        </div>
+ 
+        <main>
+            
+             <div class="container">
+                 <div class="row mt-10">
+                     <div class="col-md-12">
+                         <div id="files" style="font-size: 16px;"></div>
+                         
+                            <div id="droi" style="display:none;">{{drOI}}</div>
+                            <div id="drugSigs" style="display:none;">{{drugSigs}}</div>
+                            <div id="drugUpSigs" style="display:none;">{{drugUpSigs}}</div>
+                            <div id="drugDownSigs" style="display:none;">{{drugDownSigs}}</div>
+                     </div>
+                     
+                 </div>
+             </div>
+        
+                
+            
+        </main>
+
+        <script>
+     function truncate(input) {
+            
+            if (input.length > 20) {
+                return input.substring(0, 21) + "..."
+            }
+            else {
+                return input;
+            }
+        }
+
+            var drugMatrixSigs = JSON.parse($('#drugSigs').html())
+            var droi = $('#droi').html()
+            var drugUpSigs = JSON.parse($('#drugUpSigs').html())
+            var drugDownSigs = JSON.parse($('#drugDownSigs').html())
+
+            Object.keys(drugMatrixSigs["0"]).forEach(function(key) {
+                var value = drugMatrixSigs["0"][key];
+                var drugUpSig = drugUpSigs["0"][key];
+                var drugDownSig = drugDownSigs["0"][key];
+                var truncateValue = truncate(value)
+                $('#files').append(`<div><input type='checkbox' /><a href="#" class="signatures" data-toggle="tooltip" data-placement="right" title="${value}">${truncateValue}</a><a href="/d2s2/download_drug_matrix_drugs_upgenes/${drugUpSig}/${droi}"><i class="fas fa-arrow-alt-circle-up float-right"></i></a><a href="/d2s2/download_drug_matrix_drugs_downgenes/${drugDownSig}/${droi}"><i class="fas fa-arrow-alt-circle-down float-right"></i></a></div>`)
+            })
+
+
+                    
+        
+           
+            
+        </script> 
+    </body>
+</html>

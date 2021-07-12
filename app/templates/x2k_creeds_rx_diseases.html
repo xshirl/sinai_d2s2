@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+    <head> 
+        <title>D2S2</title>
+        <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}" type="text/css" />
+
+        <style>
+            table {
+                font-size:14px;
+            }
+
+            #files {
+                font-size:10px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h1 class="result-title">X2K Creeds Rx</h1>
+                </div>
+                <div class="col-md-3">
+                    <img class="mt-10" src="http://labs.icahn.mssm.edu/maayanlab/wp-content/uploads/sites/75/2014/10/x2kweb_logo-300x83.png" alt="L1000" width="50px" />
+                </div>
+            </div>
+        </div>
+
+        <main>
+            
+             <div class="container">
+                 <div class="row mt-10">
+                     <div class="col-md-12">
+                         <div id="x2kcreedsFiles"></div>
+                         
+                         <!-- <div id="x2kNames" style="display:none;">{{x2k_fullNames}}</div> -->
+                        <div id="x2kCreedsSigs" style="display:none">{{x2kCreedsRxSigs}}</div>
+                        <div id="x2kUpSigs" style="display:none">{{x2kUpSigs}}</div>
+                        <div id="x2kDownSigs" style="display:none">{{x2kDownSigs}}</div>
+                     </div>
+                     
+                 </div>
+             </div>
+        
+                
+            
+        </main>
+<script>
+
+function truncate(input) {
+            
+            if (input.length > 25) {
+                return input.substring(0, 26) + "..."
+            }
+            else {
+                return input;
+            }
+        }
+
+        var x2kDrugIds = JSON.parse($('#x2kCreedsSigs').html());
+        var x2kUpNames = JSON.parse($('#x2kUpSigs').html());
+        var x2kDownNames = JSON.parse($('#x2kDownSigs').html())
+        Object.keys(x2kDrugIds['0']).forEach(function(key) {
+                var drugId = x2kDrugIds['0'][key];
+                var fullName = x2kUpNames['0'][key]
+                var truncateName = truncate(fullName)
+                $('#x2kcreedsFiles').append(`<div style="margin-left: 10px;"><input type='checkbox' /><a href="#" class="signatures" data-toggle="tooltip" data-placement="right" title="${fullName}">${truncateName}</a><div class="float-right-margin"><a href="/d2s2/download_x2k_creeds_rx_diseases_upgenes/${drugId}"><i class="fas fa-arrow-alt-circle-up float-right"></i></a><a href="/d2s2/download_x2k_creeds_rx_diseases_downgenes/${drugId}"><i class="fas fa-arrow-alt-circle-down float-right"></i></i></a></div></div>`)
+                })
+                
+        
+    </script>
+    </body>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html>
+    <head> 
+        <title>D2S2</title>
+        <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}" type="text/css" />
+        <style>
+         h1 {
+                font-size: 32px;
+            }
+        
+        
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1 class="result-title">Geneshot</h1>
+                </div>
+                <div class="col-md-4">
+                        <img src="http://labs.icahn.mssm.edu/maayanlab/wp-content/uploads/sites/75/2019/05/geneshot_logo-3.jpg" alt="Geneshot" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h6>Query: <span id="drug">{{drug['input']}}</span></h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <input type="checkbox" value="original" name="geneset"><span class="geneshotTitle">Original co-occurrence</span>
+                </div>
+                <div class="col-md-2">
+                    <p style="display:inline;" id="download1"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10">
+                    <input type="checkbox" value="autorif" name="geneset"><span class="geneshotTitle">AutoRIF prediction</span> 
+                </div>
+                <div class="col-md-2">
+                    <p style="display:inline;" id="download2"> </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10">
+                    <input type="checkbox" value="generif" name="geneset"> GeneRIF prediction</div>
+                <div class="col-md-2">
+                    <p style="display:inline;" id="download3">  </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10">
+                    <input type="checkbox" value="enrichr" name="geneset"> Enrichr prediction</div>
+                <div class="col-md-2">
+                    <p style="display:inline;" id="download4"> </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10">
+                    <input type="checkbox" value="tagger" name="geneset"> Tagger prediction</div>
+                <div class="col-md-2">
+                    <p style="display:inline;" id="download5">  </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10">
+                    <input type="checkbox" value="original" name="geneset"> ARCHS4 prediction
+                </div>
+                <div class="col-md-2">
+                    <p  style="display:inline;"id="download6"> </p>
+                </div>
+            </div>
+        </div>
+        
+           
+        
+
+        <main>
+            
+             <div class="center-table" style="display:none;">
+                <div class="gene_json">{{data| safe}}</div>
+                <div class="autorif">{{autorif}}</div>
+                <div class="generif">{{generif}}</div>
+                <div class="enrichr">{{enrichr}}</div>
+                <div class="tagger">{{tagger}}</div>
+                <div class="archs4">{{archs4}}</div>
+            </div>
+        </main>
+        
+        
+        <script>
+        
+            var drug = document.getElementById('drug').innerHTML
+            console.log(`${drug}`)
+            var json = $('.gene_json').html()
+            var data = `text/json;charset=utf-8,` + encodeURIComponent(json);
+
+             $(`<a href="data:` + data + `" download="${drug}_cooccurence.json"><i class="fas fa-download" style="font-size:12px;"></i></a>`).appendTo('#download1');
+            //$('#download1').append(`<a href="data:${data}" download="${drug}_cooccurence.json"><i class="fas fa-download" style="font-size:12px;"></i></a>`)
+            
+            
+            var autorifJson = $('.autorif').html()
+            var autorifData = "text/json;charset=utf-8," + encodeURIComponent(autorifJson);
+            $('<a href="data:' + autorifData + `" download="${drug}_autorif.json"><i class="fas fa-download" style="font-size:12px;"></i></a>`).appendTo('#download2');
+            //$('#download2').append(`<a href="data:${autorifData}" download="${drug}_autorif.json"><i class="fas fa-download" style="font-size:12px;"></i></a>`)
+            
+            var generifJson = $('.generif').html();
+            var generifData = "text/json;charset=utf-8," + encodeURIComponent(generifJson);
+            $('<a href="data:' + generifData + `" download="${drug}_generif.json"><i class="fas fa-download" style="font-size:12px;"></i></a>`).appendTo('#download3');
+            //$('#download3').append(`<a href="data:${generifData}" download="${drug}_generif.json"><i class="fas fa-download" style="font-size:12px;"></i></a>`)
+            
+            var enrichrJson = $('.enrichr').html();
+            var enrichrData = "text/json;charset=utf-8," + encodeURIComponent(enrichrJson);
+            $('<a href="data:' + enrichrData + `" download="${drug}_enrichr.json"><i class="fas fa-download" style="font-size:12px;"></i></a>`).appendTo('#download4');
+            //$('#download4').append(`<a href="data:${enrichrData}" download="${drug}_enrichr.json"><i class="fas fa-download" style="font-size:12px;"></i></a>`)
+            
+            var taggerJson = $('.tagger').html();
+            var taggerData = "text/json;charset=utf-8," + encodeURIComponent(taggerJson);
+            $('<a href="data:' + taggerData + `" download="${drug}_tagger.json"><i class="fas fa-download" style="font-size:12px;"></i></a>`).appendTo('#download5');
+            //$('#download5').append(`<a href="data:${taggerData}" download="${drug}_tagger.json"><i class="fas fa-download" style="font-size:12px;"></i></a>`)
+            
+            var archs4Json = $('.archs4').html();
+            var archs4Data = "text/json;charset=utf-8," + encodeURIComponent(archs4Json);
+            $('<a href="data:' + archs4Data + `" download="${drug}_archs4.json"><i class="fas fa-download" style="font-size:12px;"></i></a>`).appendTo('#download6');
+            //$('#download6').append(`<a href="data:${archs4Data}" download="${drug}_archs4.json"><i class="fas fa-download" style="font-size:12px;"></i></a>`)
+        </script>
+        
+
+    </body>
+</html>

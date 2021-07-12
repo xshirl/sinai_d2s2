@@ -1,0 +1,15 @@
+pandas<0.25.0
+numpy
+matplotlib
+requests==2.10
+scipy
+scikit-learn
+objectpath
+clustergrammer_widget
+flask
+clustergrammer
+h5py
+h5sparse
+keras
+tensorflow
+uwsgi

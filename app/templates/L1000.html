@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html>
+    <head> 
+        <title>D2S2</title>
+        <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}" type="text/css" />
+
+        <style>
+            table {
+                font-size:14px;
+            }
+
+            #signatures {
+                font-size:14px;
+            }
+            h1 {
+                font-size: 32px;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h1 class="result-title">L1000FWD</h1>
+                </div>
+                <div class="col-md-3">
+                    <img src="https://amp.pharm.mssm.edu/l1000fwd/images/logo.png" alt="L1000" width="50px" />
+                </div>
+            </div>
+        </div>
+
+        <main>
+            
+             <div class="container">
+                 <div class="row mt-10">
+                     <div class="col-md-12">
+                         <div id="L1000_files"></div>
+                         
+                         <div id="L1000Genes" style="display:none">{{L1000_genes}}</div>
+                     </div>
+                     
+                 </div>
+             </div>
+        
+                
+            
+        </main>
+
+        <script>
+             function truncate(input) {
+            
+            if (input.length > 25) {
+                return input.substring(0, 26) + "..."
+            }
+            else {
+                return input;
+            }
+        }
+
+            // var signatureData = JSON.parse($('#L1000Sigs').html())
+            var downloadData = JSON.parse($('#L1000Genes').html())
+           
+            // jsonData = jsonData.replace(/'/g, '"')
+            // jsonData = JSON.parse(jsonData)
+            
+                Object.keys(downloadData).forEach(function(key) {
+                    var truncateKey = truncate(key)
+                    var upDownGenes = downloadData[key]
+                    var jsonUrl = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(upDownGenes));
+            
+                    $('#L1000_files').append(`<div><input type='checkbox' /><a href="#" class="signatures" data-toggle="tooltip" data-placement="right" title="${key}">${truncateKey}</a><a href="data:${jsonUrl}" style="float:right" download="${key}_up_down_genes.json"><i class="fas fa-download"></i></a></div>`)
+                    })
+
+                    
+            
+        
+           
+        </script> 
+    </body>
+</html>

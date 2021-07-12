@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+    <head> 
+        <title>D2S2</title>
+        <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}" type="text/css" />
+
+        <style>
+            table {
+                font-size:14px;
+            }
+
+            #files {
+                font-size:10px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h1 class="result-title">UK BioBank</h1>
+                </div>
+                <div class="col-md-3">
+                    <img class="mt-10" style="margin-right: 200px;" src="https://i.ibb.co/BgKyKQb/14c7fnr.png" alt="GWAS" width="120px" />
+                </div>
+            </div>
+        </div>
+
+        <main>
+            
+             <div class="container">
+                 <div class="row mt-10">
+                     <div class="col-md-12">
+                         <div id="biobankFiles"></div>
+                         
+                         <div id="biobankJson" style="display:none;" >{{biobank_json}}</div>
+                        <div id="signatures"><div id="biobankSignatures" style="display:none;" >{{gwas_signatures}}</div></div>
+                         
+                     </div>
+                     
+                 </div>
+             </div>
+        
+                
+            
+        </main>
+<script>
+
+function truncate(input) {
+            
+            if (input.length > 25) {
+                return input.substring(0, 26) + "..."
+            }
+            else {
+                return input;
+            }
+        }
+
+        var biobankSignatures = JSON.parse($('#gwasSignatures').html());
+        var biobankJson = JSON.parse($('#gwasJson').html())
+        Object.values(biobankSignatures['Phenotype']).forEach(function(value){
+            var biobankSign = value;
+            var truncateValue = truncate(biobankSign)
+            var biobankJsonFile = biobankJson[value];
+            console.log(biobankJsonFile);
+            var data = `text/json;charset=utf-8,` + encodeURIComponent(biobankJsonFile);
+
+            $('#biobankFiles').append(`<div><input type='checkbox' /><a href="#" class="signatures" data-toggle="tooltip" data-placement="right" title="${biobankSign}">${truncateValue}</a><a class="float-right" href="data:` + data + `" download="${biobankSign}_biobank.json"><i class="fas fa-download" style="font-size:12px;"></i></a></div>`)
+        })
+       
+        
+    </script>
+    </body>

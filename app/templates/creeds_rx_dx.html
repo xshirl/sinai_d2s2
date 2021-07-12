@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+    <head> 
+        <title>D2S2</title>
+        <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}" type="text/css" />
+
+        <style>
+            table {
+                font-size:14px;
+            }
+            h1 {
+                font-size: 32px;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h1 class="result-title">CREEDS Rx</h1>
+                </div>
+                <div class="col-md-3">
+                    <img class="mt-10" src="http://labs.icahn.mssm.edu/maayanlab/wp-content/uploads/sites/75/2014/10/creeds_logo.fw_-150x150.png" alt="L1000" width="50px" />
+                </div>
+            </div>
+        </div>
+
+        <main>
+            
+            <div id="creeds_rx_dx_files" class="mt-10"></div>
+             <div id="names" style="display:none;">
+                {{CREEDS_drug_ids}}
+            </div>
+            <div id="creedsUpIds" style="display:none;">{{CREEDS_up_names}}</div>
+            <div id="creedsDownIds" style="display:none;">{{CREEDS_down_names}}</div>
+        </main>
+
+
+        <script>
+
+function truncate(input) {
+
+if (input.length > 25) {
+    return input.substring(0, 26) + "..."
+}
+else {
+    return input;
+}
+}
+
+            var creedsUpNames= JSON.parse($('#creedsUpIds').html());
+            var creedsDownNames= JSON.parse($('#creedsDownIds').html());
+            var creedsDrugIds = JSON.parse($('#names').html())
+            
+            
+            
+            Object.keys(creedsDrugIds['0']).forEach(function(key) {
+                var drugId = creedsDrugIds['0'][key];
+                var fullName = creedsUpNames['0'][key]
+                var truncateName = truncate(fullName)
+                $('#creeds_rx_dx_files').append(`<div style="margin-left: 10px;"><input type='checkbox' /><a href="#" class="signatures" data-toggle="tooltip" data-placement="right" title="${fullName}">${truncateName}</a><div class="float-right-margin"><a href="/d2s2/download_creeds_rx_dx_upgenes/${drugId}"><i class="fas fa-arrow-alt-circle-up float-right"></i></a><a href="/d2s2/download_creeds_rx_dx_downgenes/${drugId}"><i class="fas fa-arrow-alt-circle-down float-right"></i></i></a></div></div>`)
+                })
+                
+         
+        
+        </script>
+    </body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+    <head> 
+        <title>D2S2</title>
+        <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}" type="text/css" />
+    
+    <style>
+        i:not(:first-child) {
+            display:none;
+        }
+        table {
+            margin-left:auto;
+            margin-right:auto;
+        }
+    </style>
+    </head>
+
+    <body>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container">
+                        <a class="navbar-brand" href="#">D2S2</a>
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <!-- <a class="nav-link" href="/d2s2/clustergrammer" style="color:#eee">Clustergrammer</a> -->
+                            </li>
+                            </ul>
+                        <img src="https://i.ibb.co/b2xHZ6W/D2-S2-Logo-2019.png" alt="logo" width="10%"/> 
+                    </div>
+                </nav>
+
+            <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 mt-10">
+                            <h1 class="result-title">Mount Sinai EMR Associations</h1>
+                        </div>
+                        <div class="col-md-2 mt-10">
+                            <img src="https://www.mountsinai.org/mshealth/themes/default/media/images/logo-color.png" alt="L1000" width="100px" />
+                        </div>
+                    </div>
+                </div>
+
+       
+
+        <main>
+            <!-- <img class="card-img" src="https://www.mountsinai.org/mshealth/themes/default/media/images/logo-color.png" alt="EMR" /> -->
+             <div class="center-table" style="margin-left:auto; margin-right:auto;">
+            {{drugData | safe}}
+           
+            </div>
+        </main>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script>
+            var specificity = $('*:contains("Specificity")');
+            specificity.append('<i class="fas fa-question-circle"></i>');
+            var seen = {};
+            $('<i class="fas fa-question-circle"></i>').each(function() {
+                var txt = $(this).text();
+                if (seen[txt])
+                    $(this).remove();
+                else
+                    seen[txt] = true;
+            });
+
+        </script>
+    </body>
+</html>

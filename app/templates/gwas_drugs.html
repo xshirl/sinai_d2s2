@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+    <head> 
+        <title>D2S2</title>
+        <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}" type="text/css" />
+
+        <style>
+            table {
+                font-size:14px;
+            }
+
+            #files {
+                font-size:10px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h1 class="result-title">GWAS Catalog</h1>
+                </div>
+                <div class="col-md-3">
+                    <img class="mt-10" src="https://www.ebi.ac.uk/gwas/images/GWAS_Catalog_circle_178x178.png" alt="GWAS" width="50px" />
+                </div>
+            </div>
+        </div>
+
+        <main>
+            
+             <div class="container">
+                 <div class="row mt-10">
+                     <div class="col-md-12">
+                         <div id="gwasFiles"></div>
+                         
+                         <div id="gwasJson" style="display:none;" >{{gwas_json}}</div>
+                        <div id="signatures"><div id="gwasSignatures" style="display:none;" >{{gwas_signatures}}</div></div>
+                         
+                     </div>
+                     
+                 </div>
+             </div>
+        
+                
+            
+        </main>
+<script>
+
+function truncate(input) {
+            
+            if (input.length > 25) {
+                return input.substring(0, 26) + "..."
+            }
+            else {
+                return input;
+            }
+        }
+
+        var gwasSignatures = JSON.parse($('#gwasSignatures').html());
+        var gwasJson = JSON.parse($('#gwasJson').html())
+        Object.values(gwasSignatures['Phenotype']).forEach(function(value){
+            var gwasSign = value;
+            var truncateValue = truncate(gwasSign)
+            var gwasJsonFile = gwasJson[value];
+            console.log(gwasJsonFile);
+            var data = `text/json;charset=utf-8,` + encodeURIComponent(gwasJsonFile);
+
+            $('#gwasFiles').append(`<div><input type='checkbox' /><a href="#" class="signatures" data-toggle="tooltip" data-placement="right" title="${gwasSign}">${truncateValue}</a><a class="float-right" href="data:` + data + `" download="${gwasSign}_gwas.json"><i class="fas fa-download" style="font-size:12px;"></i></a></div>`)
+        })
+       
+        
+    </script>
+    </body>
